@@ -11,6 +11,12 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-4 text-md-right">Author</div>
+        <div class="col-md-8">
+            <strong>{{ $book->author }}</strong>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-4 text-md-right">Image</div>
         <div class="col-md-8">
             @if(!empty($book->photo_file_name))<img width="200" src="{{ asset('storage/'.$book->photo_file_name )}}">@endIf

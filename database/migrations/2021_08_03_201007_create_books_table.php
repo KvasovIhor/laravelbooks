@@ -17,7 +17,8 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->foreignId('user_id')->index();
             $table->string('name', 255)->nullable(false);
-            $table->string('isbn', 32)->nullable(true);
+            $table->string('author', 255)->nullable(false);
+            $table->string('isbn', 32)->nullable(false);
             $table->text('description')->nullable(true);
             $table->string('photo_file_name', 255)->nullable(true);
             $table->timestamps();

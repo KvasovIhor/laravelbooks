@@ -14,7 +14,7 @@
     <tr>
         <td>Name</td>
         <td>Image</td>
-        <td>ISBN</td>
+        <td>Author</td>
         <td>Description</td>
         <td>Actions</td>
     </tr>
@@ -22,9 +22,9 @@
     <tbody>
     @foreach($books as $book)
         <tr>
-            <td>{{ $book->name }}</td>
+            <td width="200">{{ $book->name }} <p><small>(ISBN: {{$book->isbn}})</small></p></td>
             <td>@if(!empty($book->photo_file_name))<img width="200" src="{{ asset('storage/'.$book->photo_file_name )}}">@endIf</td>
-            <td width="200">{{ $book->isbn }}</td>
+            <td width="200">{{ $book->author }}</td>
             <td>{{ \Illuminate\Support\Str::words($book->description, 10,'...') }}</td>
             <td width="120">
                 <a class="btn btn-small btn-success" href="{{ route('books.show',  $book->id) }}">View</a>

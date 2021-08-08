@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Book;
-use App\Category;
-use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
+use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -36,26 +34,8 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-        ]);
-
-        $validator->after(function ($validator) use ($request) {
-            if (!empty($request->books) &&
-                $this->countBooksByUserIdAndBooksIds($request->books) != count($request->books)
-            ) {
-                $validator->errors()->add('categories', 'Some books not found');
-            }
-        });
-
-        if ($validator->fails()) {
-            return  redirect()->route('categories.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
-
         $category = new Category();
 
         $category->name = $request->name;
@@ -102,27 +82,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         $category = Category::where('user_id', Auth::id())->findOrFail($id);
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-        ]);
-
-        $validator->after(function ($validator) use ($request) {
-            if (!empty($request->books) &&
-                $this->countBooksByUserIdAndBooksIds($request->books) != count($request->books)
-            ) {
-                $validator->errors()->add('categories', 'Some books not found');
-            }
-        });
-
-        if ($validator->fails()) {
-            return  redirect()->route('categories.create')
-                ->withErrors($validator)
-                ->withInput();
-        }
 
         $category->name = $request->name;
         $category->user_id = Auth::id();
@@ -149,15 +111,5 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index')->with('message', 'Successfully deleted category!');
-    }
-
-    /**
-     * @param $booksIds array
-     * @return integer
-     */
-    private function countBooksByUserIdAndBooksIds($booksIds)
-    {
-        if (empty($booksIds)) return 0;
-        return Book::where('user_id', Auth::id())->whereIn('id', $booksIds)->count();
     }
 }

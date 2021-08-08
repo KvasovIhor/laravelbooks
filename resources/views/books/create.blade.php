@@ -19,8 +19,20 @@
 
                 @error('name')
                 <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="author" class="col-md-4 col-form-label text-md-right">Author</label>
+            <div class="col-md-6">
+                <input id="author" type="text" class="form-control @error('author') is-invalid @enderror" name="author" value="{{ old('author') }}" required autocomplete="author" autofocus>
+
+                @error('author')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
                 @enderror
             </div>
         </div>
@@ -32,8 +44,8 @@
 
                 @error('isbn')
                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <strong>{{ $message }}</strong>
+                </span>
                 @enderror
             </div>
         </div>
@@ -44,8 +56,8 @@
                 <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description">{{ trim(old('description')) }}</textarea>
                 @error('description')
                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <strong>{{ $message }}</strong>
+                </span>
                 @enderror
             </div>
         </div>
@@ -58,8 +70,8 @@
 
                 @error('photo_file_name')
                 <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                    <strong>{{ $message }}</strong>
+                </span>
                 @enderror
             </div>
         </div>
